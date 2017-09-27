@@ -67,7 +67,7 @@
 }
 
 - (UIBarButtonItem *)customBarBtnItemWithImageName:(NSString *)imageName action:(SEL)action frame:(CGRect)rect{
-    UIImage* image= [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:imageName ofType:@"png"]];
+    UIImage* image= [UIImage imageNamed:imageName];//[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:imageName ofType:@"png"]];
     UIButton *someButton= [[UIButton alloc] initWithFrame:rect];
     [someButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     [someButton setBackgroundImage:image forState:UIControlStateNormal];
