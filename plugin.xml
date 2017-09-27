@@ -23,7 +23,6 @@
         <header-file src="src/ios/WKWebViewPlugin.h" />
         <source-file src="src/ios/WKWebViewPlugin.m"/>
         
-        <resource-file src="src/ios/back.png" target="/" />
         <resource-file src="src/ios/back@2x.png" target="/" />
         <resource-file src="src/ios/back@3x.png" target="/" />
         <resource-file src="src/ios/news.png" target="/" />
