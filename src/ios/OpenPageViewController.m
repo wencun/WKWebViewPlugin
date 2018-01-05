@@ -48,6 +48,11 @@
 //        decisionHandler(WKNavigationResponsePolicyCancel);
     }
 //    else{
+//    if ([navigationResponse.response.URL.absoluteString containsString:_successUrl]) {
+//        [self back:YES];
+//    }else if ([navigationResponse.response.URL.absoluteString containsString:_backUrl]){
+//        [self back:NO];
+//    }
         decisionHandler(WKNavigationResponsePolicyAllow);
 //    }
 }
@@ -58,6 +63,11 @@
 
 - (void)setNav{
     self.title = _pageTitle;
+    if (!_isShowNav) {
+        [self.navigationController setNavigationBarHidden:YES];
+        return;
+    }
+    
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
@@ -87,9 +97,9 @@
 }
 
 
-- (void)back{
+- (void)back:(BOOL)isSuccessPage{
     if ([self.delegate respondsToSelector:@selector(popCallback:)]) {
-        [self.delegate popCallback:nil];
+        [self.delegate popCallback:@{@"isSuccessPage": [NSNumber numberWithBool:isSuccessPage]}];
     }
 }
 

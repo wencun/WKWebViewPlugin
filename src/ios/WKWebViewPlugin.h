@@ -14,4 +14,6 @@
 
 - (void)openYhWebView:(CDVInvokedUrlCommand *)command;
 
+- (void)openAlertWebView:(CDVInvokedUrlCommand *)command;
+
 @end

@@ -6,6 +6,9 @@ module.exports = {
   
   openYhWebView:function (arg, successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, "WKWebViewPlugin", "openYhWebView", [arg]);
-  }
+  },
 
+  openAlertWebView:function (arg, successCallback, errorCallback) {
+      cordova.exec(successCallback, errorCallback, "WKWebViewPlugin", "openAlertWebView", [arg]);
+  }
 };

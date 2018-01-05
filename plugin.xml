@@ -16,6 +16,9 @@
         <!-- 引入的.h .m 文件 -->
         <header-file src="src/ios/OpenPageViewController.h" />
         <source-file src="src/ios/OpenPageViewController.m"/>
+        
+        <header-file src="src/ios/YHAlertView.h" />
+        <source-file src="src/ios/YHAlertView.m"/>
 
         <header-file src="src/ios/YHWebViewController.h" />
         <source-file src="src/ios/YHWebViewController.m"/>
