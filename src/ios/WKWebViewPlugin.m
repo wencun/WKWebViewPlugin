@@ -8,25 +8,26 @@
 
 #import "WKWebViewPlugin.h"
 #import "OpenPageViewController.h"
-#import "YHWebViewController.h"
+#import "YHLianPayViewController.h"
+#import "YHAlertView.h"
 
 @interface WKWebViewPlugin()<OpenPageViewControllerDelegate>
 
 @property (nonatomic, copy) NSString *callbackId;
 @property (nonatomic, strong) NSMutableArray *array;
-@property (strong, nonatomic)OpenPageViewController *opvc;
+@property (strong, nonatomic) OpenPageViewController *opvc;
 
 @end
 
 
 @implementation WKWebViewPlugin
 
-- (void)openPage:(CDVInvokedUrlCommand *)command {
+#pragma mark - 芝麻信用
+- (void)openSesameCreditWebView:(CDVInvokedUrlCommand *)command {
     NSDictionary *dict  = [command argumentAtIndex:0 withDefault:nil];
     if (dict) {
         NSAssert(dict[@"URL"], @"WKWebViewPlugin's url can not be empty");
-        NSAssert(dict[@"successUrl"], @"WKWebViewPlugin's successUrl can not be empty");
-        NSAssert(dict[@"backUrl"], @"WKWebViewPlugin's backUrl can not be empty");
+        NSAssert(dict[@"host"], @"WKWebViewPlugin's host can not be empty");
         
         self.callbackId = [command.callbackId copy];
         self.array = [NSMutableArray array];
@@ -35,15 +36,13 @@
         _opvc.delegate = self;
         _opvc.url = dict[@"URL"];
         _opvc.pageTitle = dict[@"title"];
-        _opvc.successUrl = dict[@"successUrl"];
-        _opvc.backUrl = dict[@"backUrl"];
-        _opvc.isShowNav = [dict[@"isShowNav"] boolValue] == NO ? NO : YES;
+        
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_opvc];
         [self setStatusBarBackgroundColor:[UIColor blackColor]];
         [self.viewController presentViewController:nav animated:YES completion:nil];
     }
 }
-
+#pragma mark - alert样式
 - (void)openAlertWebView:(CDVInvokedUrlCommand *)command {
     NSDictionary *dict  = [command argumentAtIndex:0 withDefault:nil];
     if (dict) {
@@ -59,6 +58,28 @@
         [wView setRunJSCode:runJsCode];
         [wView loadUrl:url];
         [wView showView];
+    }
+}
+
+#pragma mark - 连连支付
+- (void)openLianPayWebView:(CDVInvokedUrlCommand *)command {
+    NSDictionary *dict  = [command argumentAtIndex:0 withDefault:nil];
+    if (dict) {
+        NSAssert(dict[@"URL"], @"WKWebViewPlugin's url can not be empty");
+        NSAssert(dict[@"successUrl"], @"WKWebViewPlugin's successUrl can not be empty");
+        NSAssert(dict[@"backUrl"], @"WKWebViewPlugin's backUrl can not be empty");
+        
+        YHLianPayViewController *lianPay = [[YHLianPayViewController alloc] init];
+        lianPay.delegate = self;
+        lianPay.url = dict[@"URL"];
+        lianPay.pageTitle = dict[@"title"];
+        lianPay.successUrl = dict[@"successUrl"];
+        lianPay.backUrl = dict[@"backUrl"];
+        lianPay.isShowNav = [dict[@"isShowNav"] boolValue] == NO ? NO : YES;
+        
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:lianPay];
+        [self setStatusBarBackgroundColor:[UIColor blackColor]];
+        [self.viewController presentViewController:nav animated:YES completion:nil];
     }
 }
 
@@ -80,26 +101,7 @@
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
 
-#pragma mark -
 
-- (void)openYhWebView:(CDVInvokedUrlCommand *)command {
-    NSDictionary *dict  = [command argumentAtIndex:0 withDefault:nil];
-    if (dict) {
-        NSAssert(dict[@"URL"], @"WKWebViewPlugin's url can not be empty");
-        
-        NSString *url = dict[@"URL"];
-        NSString *pageTitle = dict[@"title"];
-        NSString *runJsCode = dict[@"funcAddParam"];
-        
-        YHWebViewController *webViewC = [[YHWebViewController alloc] initWithTitle:pageTitle urlStr:url runJsCode:runJsCode];
-        UINavigationController *navC = [[UINavigationController alloc] initWithRootViewController:webViewC];
-        navC.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil];
-        navC.navigationBar.barStyle = UIBarStyleBlack;
-        
-        [self.viewController presentViewController:navC animated:YES completion:^{}];
-    }
-    
-}
 
 @end
 

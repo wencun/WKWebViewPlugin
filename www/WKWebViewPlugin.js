@@ -1,11 +1,11 @@
 module.exports = {
 
-  openPage:function (arg, successCallback, errorCallback) {
-    cordova.exec(successCallback, errorCallback, "WKWebViewPlugin", "openPage", [arg]);
+  openSesameCreditWebView:function (arg, successCallback, errorCallback) {
+    cordova.exec(successCallback, errorCallback, "WKWebViewPlugin", "openSesameCreditWebView", [arg]);
   },
   
-  openYhWebView:function (arg, successCallback, errorCallback) {
-    cordova.exec(successCallback, errorCallback, "WKWebViewPlugin", "openYhWebView", [arg]);
+  openLianPayWebView:function (arg, successCallback, errorCallback) {
+    cordova.exec(successCallback, errorCallback, "WKWebViewPlugin", "openLianPayWebView", [arg]);
   },
 
   openAlertWebView:function (arg, successCallback, errorCallback) {

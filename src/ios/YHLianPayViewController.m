@@ -6,14 +6,14 @@
 //  Copyright © 2017年 lv zaiyi. All rights reserved.
 //
 
-#import "OpenPageViewController.h"
+#import "YHLianPayViewController.h"
 #import <WebKit/WebKit.h>
 
-@interface OpenPageViewController ()<WKNavigationDelegate,WKUIDelegate>
+@interface YHLianPayViewController ()<WKNavigationDelegate,WKUIDelegate>
 @property (nonatomic,strong) WKWebView *webView;
 @end
 
-@implementation OpenPageViewController
+@implementation YHLianPayViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,32 +29,14 @@
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
-    if (!_host) {
-        decisionHandler(WKNavigationResponsePolicyAllow);
-        return;
+    
+    if ([navigationResponse.response.URL.absoluteString containsString:_successUrl]) {
+        [self back:YES];
+    }else if ([navigationResponse.response.URL.absoluteString containsString:_backUrl]){
+        [self back:NO];
     }
-    if ([navigationResponse.response.URL.absoluteString containsString:_host]) {
-        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)3.0 * NSEC_PER_SEC);
-//        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//        dispatch_async(queue, ^{
-//           
-//        });
-        __weak __typeof(self) weakSelf = self;
-        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-            __strong __typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf back];
-        });
-        //不允许跳转
-//        decisionHandler(WKNavigationResponsePolicyCancel);
-    }
-//    else{
-//    if ([navigationResponse.response.URL.absoluteString containsString:_successUrl]) {
-//        [self back:YES];
-//    }else if ([navigationResponse.response.URL.absoluteString containsString:_backUrl]){
-//        [self back:NO];
-//    }
-        decisionHandler(WKNavigationResponsePolicyAllow);
-//    }
+    
+    decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{
@@ -73,7 +55,7 @@
     
     [self.navigationItem setLeftBarButtonItem:[self customBarBtnItemWithImageName:@"back" action:@selector(navBack) frame:CGRectMake(0, 0, 15, 25)]];
     
-//    [self.navigationItem setRightBarButtonItem:[self customBarBtnItemWithImageName:@"news" action:@selector(dismissVC) frame:CGRectMake(0, 0, 25, 25)]];
+    //    [self.navigationItem setRightBarButtonItem:[self customBarBtnItemWithImageName:@"news" action:@selector(dismissVC) frame:CGRectMake(0, 0, 25, 25)]];
 }
 
 - (UIBarButtonItem *)customBarBtnItemWithImageName:(NSString *)imageName action:(SEL)action frame:(CGRect)rect{
@@ -81,7 +63,7 @@
     UIButton *someButton= [[UIButton alloc] initWithFrame:rect];
     [someButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     [someButton setBackgroundImage:image forState:UIControlStateNormal];
-//    [someButton setShowsTouchWhenHighlighted:YES];
+    //    [someButton setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem* leftBarItem= [[UIBarButtonItem alloc] initWithCustomView:someButton];
     return leftBarItem;
 }
@@ -121,3 +103,4 @@
 }
 
 @end
+

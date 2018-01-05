@@ -10,10 +10,12 @@
 
 @interface WKWebViewPlugin : CDVPlugin
 
-- (void)openPage:(CDVInvokedUrlCommand *)command;
-
-- (void)openYhWebView:(CDVInvokedUrlCommand *)command;
-
+//芝麻信用
+- (void)openSesameCreditWebView:(CDVInvokedUrlCommand *)command;
+//连连支付
+- (void)openLianPayWebView:(CDVInvokedUrlCommand *)command;
+//Alert样式
 - (void)openAlertWebView:(CDVInvokedUrlCommand *)command;
 
 @end
+
