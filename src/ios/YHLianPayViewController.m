@@ -31,9 +31,9 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
     if ([navigationResponse.response.URL.absoluteString containsString:_successUrl]) {
-        [self back:YES];
+        [self backLianPay:YES];
     }else if ([navigationResponse.response.URL.absoluteString containsString:_backUrl]){
-        [self back:NO];
+        [self backLianPay:NO];
     }
     
     decisionHandler(WKNavigationResponsePolicyAllow);
@@ -79,9 +79,9 @@
 }
 
 
-- (void)back:(BOOL)isSuccessPage{
-    if ([self.delegate respondsToSelector:@selector(popCallback:)]) {
-        [self.delegate popCallback:@{@"isSuccessPage": [NSNumber numberWithBool:isSuccessPage]}];
+- (void)backLianPay:(BOOL)isSuccessPage{
+    if ([self.delegate respondsToSelector:@selector(popLianPayCallback:)]) {
+        [self.delegate popLianPayCallback:@{@"isSuccessPage": [NSNumber numberWithBool:isSuccessPage]}];
     }
 }
 

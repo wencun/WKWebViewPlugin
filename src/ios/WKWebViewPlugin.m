@@ -16,6 +16,7 @@
 @property (nonatomic, copy) NSString *callbackId;
 @property (nonatomic, strong) NSMutableArray *array;
 @property (strong, nonatomic) SesameCreditViewController *sesameVC;
+@property (strong, nonatomic) YHLianPayViewController *lianPay;
 
 @end
 
@@ -69,15 +70,15 @@
         NSAssert(dict[@"successUrl"], @"WKWebViewPlugin's successUrl can not be empty");
         NSAssert(dict[@"backUrl"], @"WKWebViewPlugin's backUrl can not be empty");
         
-        YHLianPayViewController *lianPay = [[YHLianPayViewController alloc] init];
-        lianPay.delegate = self;
-        lianPay.url = dict[@"URL"];
-        lianPay.pageTitle = dict[@"title"];
-        lianPay.successUrl = dict[@"successUrl"];
-        lianPay.backUrl = dict[@"backUrl"];
-        lianPay.isShowNav = [dict[@"isShowNav"] boolValue] == NO ? NO : YES;
+        _lianPay = [[YHLianPayViewController alloc] init];
+        _lianPay.delegate = self;
+        _lianPay.url = dict[@"URL"];
+        _lianPay.pageTitle = dict[@"title"];
+        _lianPay.successUrl = dict[@"successUrl"];
+        _lianPay.backUrl = dict[@"backUrl"];
+        _lianPay.isShowNav = [dict[@"isShowNav"] boolValue] == NO ? NO : YES;
         
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:lianPay];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_lianPay];
         [self setStatusBarBackgroundColor:[UIColor blackColor]];
         [self.viewController presentViewController:nav animated:YES completion:nil];
     }
@@ -96,6 +97,11 @@
     [_sesameVC dismissVC];
 }
 
+- (void)popLianPayCallback:(NSDictionary *)dict{
+    [self sendResult:dict];
+    [_lianPay dismissVC];
+}
+
 - (void)sendResult:(NSDictionary*) resultDict{
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDict];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
@@ -104,3 +110,4 @@
 
 
 @end
+

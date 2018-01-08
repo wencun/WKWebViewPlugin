@@ -10,7 +10,7 @@
 
 @protocol YHLianPayViewControllerDelegate <NSObject>
 
-- (void)popCallback:(NSDictionary *)dict;
+- (void)popLianPayCallback:(NSDictionary *)dict;
 
 @end
 
@@ -25,3 +25,4 @@
 
 - (void)dismissVC;
 @end
+
