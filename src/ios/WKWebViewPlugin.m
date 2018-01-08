@@ -7,15 +7,15 @@
 //
 
 #import "WKWebViewPlugin.h"
-#import "OpenPageViewController.h"
+#import "SesameCreditViewController.h"
 #import "YHLianPayViewController.h"
 #import "YHAlertView.h"
 
-@interface WKWebViewPlugin()<OpenPageViewControllerDelegate>
+@interface WKWebViewPlugin()<SesameCreditViewControllerDelegate,YHLianPayViewControllerDelegate>
 
 @property (nonatomic, copy) NSString *callbackId;
 @property (nonatomic, strong) NSMutableArray *array;
-@property (strong, nonatomic) OpenPageViewController *opvc;
+@property (strong, nonatomic) SesameCreditViewController *sesameVC;
 
 @end
 
@@ -32,12 +32,12 @@
         self.callbackId = [command.callbackId copy];
         self.array = [NSMutableArray array];
         
-        _opvc = [[OpenPageViewController alloc] init];
-        _opvc.delegate = self;
-        _opvc.url = dict[@"URL"];
-        _opvc.pageTitle = dict[@"title"];
+        _sesameVC = [[SesameCreditViewController alloc] init];
+        _sesameVC.delegate = self;
+        _sesameVC.url = dict[@"URL"];
+        _sesameVC.pageTitle = dict[@"title"];
         
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_opvc];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_sesameVC];
         [self setStatusBarBackgroundColor:[UIColor blackColor]];
         [self.viewController presentViewController:nav animated:YES completion:nil];
     }
@@ -93,7 +93,7 @@
 
 - (void)popCallback:(NSDictionary *)dict{
     [self sendResult:dict];
-    [_opvc dismissVC];
+    [_sesameVC dismissVC];
 }
 
 - (void)sendResult:(NSDictionary*) resultDict{
@@ -104,5 +104,3 @@
 
 
 @end
-
-
