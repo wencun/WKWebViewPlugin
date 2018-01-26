@@ -8,6 +8,7 @@
 
 #import "YHLianPayViewController.h"
 #import <WebKit/WebKit.h>
+#import "SVProgressHUD.h"
 
 @interface YHLianPayViewController ()<WKNavigationDelegate,WKUIDelegate>
 @property (nonatomic,strong) WKWebView *webView;
@@ -17,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [SVProgressHUD show];
     [self setNav];
     
     self.webView = [[WKWebView alloc] initWithFrame:self.view.bounds];
@@ -31,12 +33,21 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
     if ([navigationResponse.response.URL.absoluteString containsString:_successUrl]) {
-        [self backLianPay:YES];
+        [self backLianPay:@"1"];
     }else if ([navigationResponse.response.URL.absoluteString containsString:_backUrl]){
-        [self backLianPay:NO];
+        [self backLianPay:@"0"];
     }
     
     decisionHandler(WKNavigationResponsePolicyAllow);
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
+    [SVProgressHUD dismiss];
+    //如果为0则无限期
+    if (![@"0" isEqualToString:_sessionExpirationTime]) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+        [self performSelector:@selector(backLianPay:) withObject:@"0" afterDelay:[_sessionExpirationTime doubleValue]];
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{
@@ -79,21 +90,18 @@
 }
 
 
-- (void)backLianPay:(BOOL)isSuccessPage{
+- (void)backLianPay:(NSString *)isSuccessPage{
     if ([self.delegate respondsToSelector:@selector(popLianPayCallback:)]) {
-        [self.delegate popLianPayCallback:@{@"isSuccessPage": [NSNumber numberWithBool:isSuccessPage]}];
+        [self.delegate popLianPayCallback:@{@"isSuccessPage": [isSuccessPage isEqualToString:@"1"]?@1:@0}];
     }
-}
-
-- (void)dismissVC{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)navBack {
     if (self.webView.canGoBack) {
         [self.webView goBack];
     } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self backLianPay:@"0"];
+        //        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

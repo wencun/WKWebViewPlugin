@@ -36,6 +36,7 @@
         _sesameVC = [[SesameCreditViewController alloc] init];
         _sesameVC.delegate = self;
         _sesameVC.url = dict[@"URL"];
+        _sesameVC.host = dict[@"host"];
         _sesameVC.pageTitle = dict[@"title"];
         
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_sesameVC];
@@ -69,6 +70,9 @@
         NSAssert(dict[@"URL"], @"WKWebViewPlugin's url can not be empty");
         NSAssert(dict[@"successUrl"], @"WKWebViewPlugin's successUrl can not be empty");
         NSAssert(dict[@"backUrl"], @"WKWebViewPlugin's backUrl can not be empty");
+        //        NSAssert(dict[@"sessionExpirationTime"], @"WKWebViewPlugin's sessionExpirationTime can not be empty");
+        
+        self.callbackId = [command.callbackId copy];
         
         _lianPay = [[YHLianPayViewController alloc] init];
         _lianPay.delegate = self;
@@ -77,6 +81,7 @@
         _lianPay.successUrl = dict[@"successUrl"];
         _lianPay.backUrl = dict[@"backUrl"];
         _lianPay.isShowNav = [dict[@"isShowNav"] boolValue] == NO ? NO : YES;
+        _lianPay.sessionExpirationTime = dict[@"sessionExpirationTime"];
         
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_lianPay];
         [self setStatusBarBackgroundColor:[UIColor blackColor]];
@@ -105,6 +110,8 @@
 - (void)sendResult:(NSDictionary*) resultDict{
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDict];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+    [self setStatusBarBackgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.0f]];
+    
 }
 
 

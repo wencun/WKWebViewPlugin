@@ -21,6 +21,7 @@
 @property (nonatomic, copy)NSString *successUrl;
 @property (nonatomic, copy)NSString *backUrl;
 @property (nonatomic, assign)BOOL isShowNav;
+@property (nonatomic, copy)NSString *sessionExpirationTime;
 @property (nonatomic, weak)id<YHLianPayViewControllerDelegate> delegate;
 
 - (void)dismissVC;

@@ -8,6 +8,7 @@
 
 #import "SesameCreditViewController.h"
 #import <WebKit/WebKit.h>
+#import "SVProgressHUD.h"
 
 @interface SesameCreditViewController ()<WKNavigationDelegate,WKUIDelegate>
 @property (nonatomic,strong) WKWebView *webView;
@@ -17,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [SVProgressHUD show];
     [self setNav];
     
     self.webView = [[WKWebView alloc] initWithFrame:self.view.bounds];
@@ -44,8 +46,24 @@
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
+    [SVProgressHUD dismiss];
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
+}
+
+- (UIImage*) createImageWithColor: (UIColor*) color
+{
+    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
 }
 
 - (void)setNav{
@@ -53,6 +71,8 @@
     
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationController.navigationBar.translucent = NO;
+    
     
     [self.navigationItem setLeftBarButtonItem:[self customBarBtnItemWithImageName:@"back" action:@selector(navBack) frame:CGRectMake(0, 0, 15, 25)]];
     
@@ -94,7 +114,8 @@
     if (self.webView.canGoBack) {
         [self.webView goBack];
     } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self back];
+        //        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

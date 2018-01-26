@@ -29,5 +29,19 @@
         <resource-file src="src/ios/back@2x.png" target="/" />
         <resource-file src="src/ios/back@3x.png" target="/" />
         <resource-file src="src/ios/news.png" target="/" />
+        
+        
+        <!-- SVProgressHUD start -->
+        <header-file src="src/ios/SVProgressHUD/SVIndefiniteAnimatedView.h"/>
+        <source-file src="src/ios/SVProgressHUD/SVIndefiniteAnimatedView.m"/>
+        <header-file src="src/ios/SVProgressHUD/SVProgressAnimatedView.h"/>
+        <source-file src="src/ios/SVProgressHUD/SVProgressAnimatedView.m"/>
+        <header-file src="src/ios/SVProgressHUD/SVProgressHUD.h"/>
+        <source-file src="src/ios/SVProgressHUD/SVProgressHUD.m"/>
+        <header-file src="src/ios/SVProgressHUD/SVRadialGradientLayer.h"/>
+        <source-file src="src/ios/SVProgressHUD/SVRadialGradientLayer.m"/>
+        <header-file src="src/ios/SVProgressHUD/SVProgressHUD-Prefix.pch"/>
+        <resource-file src="src/ios/SVProgressHUD/SVProgressHUD.bundle" target="/" />
+        <!-- SVProgressHUD end -->
     </platform>
 </plugin>
