@@ -40,6 +40,9 @@
         webView.UIDelegate = self;
         self.webView = webView;
         [contentView addSubview:webView];
+        
+        self.scrollCount = 0;
+
         // 等待框
         UIActivityIndicatorView* waitView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0,0,30.0,30.0)];
         waitView.center = webView.center;
@@ -148,6 +151,15 @@
 #pragma mark -
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    //解决第一次打开的时候，偶尔会出现执行此方法的情况，即scrollView.contentOffset会变动
+    if (self.scrollCount < 2) {//测试出来2次
+        if (scrollView.contentOffset.y > 100){//测试出来scrollView.contentOffset.y 会偏移 400多，所以取一个大概值即可，还有一个原因是，如果是手动滑动的话，scrollView.contentOffset.y变化幅度不会超过10
+            self.scrollCount++;
+            return;
+        }else{
+            self.scrollCount = 2;
+        }
+    }
     CGFloat offset = (scrollView.contentSize.height-self.webView.frame.size.height) - scrollView.contentOffset.y;
     if (offset <= 10.0) {
         self.doneButt.enabled = true;

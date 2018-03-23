@@ -45,6 +45,8 @@ typedef void(^ButtonHandler)(NSString*);
  */
 @property (nonatomic,weak) UIView *contentView;
 
+@property (nonatomic,assign) NSUInteger scrollCount;
+
 /**
  弹框内的 WebView
  */
