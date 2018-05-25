@@ -8,7 +8,7 @@
 
 #import <Cordova/CDV.h>
 
-@interface WKWebViewPlugin : CDVPlugin
+@interface YHWebViewPlugin : CDVPlugin
 
 //芝麻信用
 - (void)openSesameCreditWebView:(CDVInvokedUrlCommand *)command;

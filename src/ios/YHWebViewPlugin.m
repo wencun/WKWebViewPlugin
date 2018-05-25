@@ -6,12 +6,12 @@
 //
 //
 
-#import "WKWebViewPlugin.h"
+#import "YHWebViewPlugin.h"
 #import "SesameCreditViewController.h"
 #import "YHLianPayViewController.h"
 #import "YHAlertView.h"
 
-@interface WKWebViewPlugin()<SesameCreditViewControllerDelegate,YHLianPayViewControllerDelegate>
+@interface YHWebViewPlugin()<SesameCreditViewControllerDelegate,YHLianPayViewControllerDelegate>
 
 @property (nonatomic, copy) NSString *callbackId;
 @property (nonatomic, strong) NSMutableArray *array;
@@ -21,7 +21,7 @@
 @end
 
 
-@implementation WKWebViewPlugin
+@implementation YHWebViewPlugin
 
 #pragma mark - 芝麻信用
 - (void)openSesameCreditWebView:(CDVInvokedUrlCommand *)command {

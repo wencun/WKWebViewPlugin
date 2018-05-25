@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colarBlack">#000000</color>
+    <!-- 白色 -->
+    <color name="colorwhite">#ffffff</color>
+    <!--透明-->
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorRed">#ed4c59</color>
+    <color name="colorLine">#eeeeee</color>
+   <color name="colorNoClick">#cccccc</color>
+</resources>

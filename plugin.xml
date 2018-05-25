@@ -1,17 +1,75 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com.yhload.WKWebViewPlugin" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>WKWebViewPlugin</name>
-    <js-module name="WKWebViewPlugin" src="www/WKWebViewPlugin.js">
-        <clobbers target="cordova.plugins.WKWebViewPlugin" />
+<plugin id="cordova-plugin-yhwebview" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>YHWebViewPlugin</name>
+    <js-module name="YHWebViewPlugin" src="www/YHWebViewPlugin.js">
+        <clobbers target="cordova.plugins.YHWebViewPlugin" />
     </js-module>
     
-    <platform name="ios">
-        <config-file parent="/*" target="config.xml">
-            <feature name="WKWebViewPlugin">
-                <param name="ios-package" value="WKWebViewPlugin"/>
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="YHWebViewPlugin">
+                <param name="android-package" value="com.webview.yhck.YHWebViewPlugin"/>
             </feature>
         </config-file>
         
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET"/>
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity
+            android:name="com.webview.yhck.WebViewActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+            <activity android:name="com.webview.yhck.MyWebViewActivity"
+            android:theme="@style/dialogstyle" />
+            <activity android:name="com.webview.yhck.LianPayActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:exported="true"
+                android:screenOrientation="portrait"
+                android:theme="@android:style/Theme.Black.NoTitleBar" ></activity>
+        </config-file>
+        <source-file src="src/android/YHWebViewPlugin.java" target-dir="src/com/webview/yhck"/>
+        <source-file src="src/android/WebViewActivity.java" target-dir="src/com/webview/yhck"/>
+        <source-file src="src/android/LianPayActivity.java" target-dir="src/com/webview/yhck"/>
+        <source-file src="src/android/MyWebViewActivity.java" target-dir="src/com/webview/yhck"/>
+        <source-file src="src/android/MyWevView.java" target-dir="src/com/webview/yhck"/>
+        
+        
+        <source-file src="src/android/layout/activity_webview.xml" target-dir="res/layout" />
+        <source-file src="src/android/layout/activity_my_web_view.xml" target-dir="res/layout" />
+        <source-file src="src/android/layout/custom_dialog_progress.xml" target-dir="res/layout" />
+        
+        <source-file src="src/android/drawable/back.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawable/news.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawable/shape_corner.xml" target-dir="res/drawable" />
+        <source-file src="src/android/drawable/progress_animation_list.xml" target-dir="res/drawable" />
+        
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading1.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading2.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading3.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading4.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading5.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading6.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading7.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading8.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading9.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading10.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading11.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/drawable-hdpi/ic_customer_loading12.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/values/loading_styles.xml" target-dir="res/values" />
+        <source-file src="src/android/values/web_colors.xml" target-dir="res/values" />
+        <source-file src="src/android/values/web_styles.xml" target-dir="res/values" />
+    </platform>
+    
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="YHWebViewPlugin">
+                <param name="ios-package" value="YHWebViewPlugin"/>
+            </feature>
+        </config-file>
         
         <!-- 引入的.h .m 文件 -->
         <header-file src="src/ios/SesameCreditViewController.h" />
@@ -23,13 +81,12 @@
         <header-file src="src/ios/YHLianPayViewController.h" />
         <source-file src="src/ios/YHLianPayViewController.m"/>
 
-        <header-file src="src/ios/WKWebViewPlugin.h" />
-        <source-file src="src/ios/WKWebViewPlugin.m"/>
+        <header-file src="src/ios/YHWebViewPlugin.h" />
+        <source-file src="src/ios/YHWebViewPlugin.m"/>
         
         <resource-file src="src/ios/back@2x.png" target="/" />
         <resource-file src="src/ios/back@3x.png" target="/" />
         <resource-file src="src/ios/news.png" target="/" />
-        
         
         <!-- SVProgressHUD start -->
         <header-file src="src/ios/SVProgressHUD/SVIndefiniteAnimatedView.h"/>
